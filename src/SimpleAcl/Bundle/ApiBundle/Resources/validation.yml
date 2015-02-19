@@ -1,0 +1,21 @@
+#SimpleAcl\Bundle\CoreBundle\Document\Product:
+#    properties:
+#        name:
+#            - NotBlank: ~
+#            - NotNull: ~
+#            - Length:
+#                min: 2
+#                max: 50
+#                minMessage: "Your name must be at least 2 characters length"
+#                maxMessage: "Your name cannot be longer than 50 characters length"
+#        description:
+#            - NotBlank: ~
+#            - NotNull: ~
+#            - Length:
+#                min: 2
+#                max: 50
+#                minMessage: "Your description must be at least  characters length"
+#                maxMessage: "Your description cannot be longer than  characters length"
+#        price:
+#            - NotBlank: ~
+#            - NotNull: ~

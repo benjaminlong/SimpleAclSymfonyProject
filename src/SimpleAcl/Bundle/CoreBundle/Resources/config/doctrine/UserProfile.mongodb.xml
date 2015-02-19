@@ -1,0 +1,16 @@
+<doctrine-mongo-mapping xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
+                    http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
+
+    <document name="SimpleAcl\Bundle\CoreBundle\Document\UserProfile">
+        <field fieldName="id" id="true" strategy="auto" />
+        <field fieldName="nickName" type="string" />
+        <field fieldName="firstName" type="string" />
+        <field fieldName="lastName" type="string" />
+        <field fieldName="birthday" type="string" />
+        <field fieldName="phoneNumber" type="string" />
+        <reference-many field="users"
+                        target-document="SimpleAcl\Bundle\CoreBundle\Document\User" />
+    </document>
+</doctrine-mongo-mapping>

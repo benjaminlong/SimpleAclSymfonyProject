@@ -1,0 +1,4 @@
+simple_acl_api_product:
+    name_prefix: simple_acl_
+    resource: SimpleAcl\Bundle\CoreBundle\Controller\ProductController
+    type: rest
