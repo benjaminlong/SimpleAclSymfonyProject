@@ -31,7 +31,8 @@ class ProductType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => $this->class,
-            'cascade_validation' => true
+            'cascade_validation' => true,
+            'csrf_protection' => false,
         ));
     }
 

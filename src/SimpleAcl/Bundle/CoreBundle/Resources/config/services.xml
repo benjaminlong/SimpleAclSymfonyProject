@@ -10,8 +10,9 @@
     
     <services>
         <service id="simple_acl.product.handler" class="%simple_acl.product.handler.class%">
-            <argument type="service" id="doctrine_mongodb" />
+            <argument type="service" id="doctrine.odm.mongodb.document_manager" />
             <argument type="service" id="form.factory" />
+            <argument type="service" id="simple_acl.form.type.product" />
             <argument>%simple_acl.model.product.class%</argument>
         </service>
     </services>

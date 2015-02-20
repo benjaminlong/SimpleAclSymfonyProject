@@ -3,46 +3,65 @@
 namespace SimpleAcl\Bundle\CoreBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\Util\Codes;
 use Symfony\Bundle\FrameworkBundle\Templating\TemplateReference;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ProductController extends FOSRestController
 {
+    public function getProductsAction()
+    {
+        if (false === $this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw new AccessDeniedException();
+        }
+
+        $formHandler = $this->container->get('simple_acl.product.handler');
+        $resources = $formHandler->getAll();
+
+        $view = $this
+            ->view()
+            ->setData($resources);
+
+        return $this->handleView($view);
+    }
+
     public function getProductAction($id)
     {
-        $page = $this->container
-            ->get('simple_acl.product.handler')
-            ->get($id);
+        $formHandler = $this->container->get('simple_acl.product.handler');
+        $resource = $formHandler->get($id);
 
-        return $page;
+        if (is_null($resource)) {
+            throw new BadRequestHttpException();
+        }
+
+        $view = $this
+            ->view()
+            ->setData($resource);
+
+        return $this->handleView($view);
     }
 
     public function postProductAction(Request $request)
     {
+        # this is it
+        var_dump("HERE");
+//        if (false === $this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+//            throw new AccessDeniedException();
+//        }
+
         try {
-            // Hey Page handler create a new Page.
-            $newProduct = $this->container->get('simple_acl.product.handler')->post(
-                $request->request->all()
-            );
+            $formHandler = $this->container->get('simple_acl.product.handler');
+            $resource = $formHandler->post($request->request->all());
 
-            $routeOptions = array(
-                'id' => $newProduct->getId(),
-                '_format' => $request->get('_format')
-            );
+            $view = $this
+                ->view()
+                ->setData($resource);
 
-            return $this->routeRedirectView('simple_acl_get_product', $routeOptions, Codes::HTTP_CREATED);
+            return $this->handleView($view);
         } catch (InvalidArgumentException $exception) {
             return $exception;
         }
-    }
-
-    /**
-     * @return \FOS\RestBundle\View\ViewHandler
-     */
-    private function getViewHandler()
-    {
-        return $this->container->get('fos_rest.view_handler');
     }
 }

@@ -79,6 +79,18 @@ fos_user:
     firewall_name: main
     user_class: SimpleAcl\Bundle\CoreBundle\Document\User
 
+fos_rest:
+    disable_csrf_role: ROLE_API
+
+fos_oauth_server:
+    db_driver: mongodb       # Driver availables: orm, mongodb, or propel
+    client_class:        SimpleAcl\Bundle\ApiBundle\Document\Client
+    access_token_class:  SimpleAcl\Bundle\ApiBundle\Document\AccessToken
+    refresh_token_class: SimpleAcl\Bundle\ApiBundle\Document\RefreshToken
+    auth_code_class:     SimpleAcl\Bundle\ApiBundle\Document\AuthCode
+
+    service:
+        user_provider: fos_user.user_manager
 
 simple_acl_core:
     db_driver: mongodb
@@ -90,3 +102,10 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+jms_serializer:
+    metadata:
+        directories:
+            simpleAclCore:
+                namespace_prefix: "SimpleAcl\\Bundle\\CoreBundle"
+                path: "@SimpleAclApiBundle/Resources/config/serializer"

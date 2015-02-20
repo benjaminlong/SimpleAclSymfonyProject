@@ -4,11 +4,18 @@ namespace SimpleAcl\Component\Model;
 
 class Product implements ProductInterface
 {
+    protected $id;
+
     protected $name;
 
     protected $description;
 
     protected $price;
+
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * @inheritdoc

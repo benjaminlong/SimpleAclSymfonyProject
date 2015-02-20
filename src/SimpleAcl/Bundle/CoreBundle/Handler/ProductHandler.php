@@ -2,33 +2,39 @@
 
 namespace SimpleAcl\Bundle\CoreBundle\Handler;
 
-use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use Doctrine\Common\Proxy\Exception\InvalidArgumentException;
+use Doctrine\ODM\MongoDB\DocumentManager;
 use SimpleAcl\Bundle\CoreBundle\Document\Product;
-use SimpleAcl\Bundle\CoreBundle\Form\Type\ProductType;
 use SimpleAcl\Component\Handler\ProductHandlerInterface;
 use SimpleAcl\Component\Model\ProductInterface;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormTypeInterface;
 
 class ProductHandler implements ProductHandlerInterface
 {
-    protected $om;
-
-    protected $entityClass;
+    protected $dm;
 
     protected $repository;
 
-    private $formFactory;
+    protected $formType;
+
+    protected $formFactory;
 
     public function __construct(
-        ManagerRegistry $om,
+        DocumentManager $dm,
         FormFactoryInterface $formFactory,
+        FormTypeInterface $formType,
         $entityClass
     ) {
-        $this->om = $om;
+        $this->dm = $dm;
         $this->formFactory = $formFactory;
-        $this->entityClass = $entityClass;
-        $this->repository = $this->om->getRepository($this->entityClass);
+        $this->formType = $formType;
+        $this->repository = $this->dm->getRepository($entityClass);
+    }
+
+    public function getAll()
+    {
+        return $this->repository->findAll();
     }
 
     public function get($id)
@@ -52,19 +58,16 @@ class ProductHandler implements ProductHandlerInterface
     private function processForm(ProductInterface $product, array $parameters, $method = "PUT")
     {
         $form = $this->formFactory->create(
-            new ProductType($this->entityClass),
+            $this->formType,
             $product,
             array('method' => $method)
         );
 
-        var_dump($parameters);
-
         $form->submit($parameters, 'PATCH' !== $method);
         if ($form->isValid()) {
-
             $product = $form->getData();
-            $this->om->persist($product);
-            $this->om->flush($product);
+            $this->dm->persist($product);
+            $this->dm->flush($product);
 
             return $product;
         }

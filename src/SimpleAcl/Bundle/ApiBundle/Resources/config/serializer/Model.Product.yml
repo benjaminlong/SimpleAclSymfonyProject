@@ -1,0 +1,19 @@
+SimpleAcl\Component\Model\Product:
+    exclusion_policy: ALL
+    xml_root_name: product
+    properties:
+        id:
+            expose: true
+            type: string
+        name:
+            expose: true
+            type: string
+        description:
+            expose: true
+            type: string
+    relations:
+        - rel: self
+          href:
+              route: simple_acl_product_get
+              parameters:
+                  id: expr(object.getId())

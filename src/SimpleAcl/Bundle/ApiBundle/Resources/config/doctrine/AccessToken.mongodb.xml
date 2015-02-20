@@ -3,10 +3,12 @@
                         xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                     http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
-    <document name="SimpleAcl\Bundle\CoreBundle\Document\Product">
-        <field fieldName="id" id="true" strategy="auto" />
-        <field fieldName="name" type="string" />
-        <field fieldName="description" type="string" />
-        <field fieldName="price" type="float" />
+    <document name="SimpleAcl\Bundle\ApiBundle\Document\AccessToken"
+              db="simple_acl_oauth"
+              collection="oauthAccessToken"
+              customId="true">
+        <field fieldName="id" id="true" strategy="AUTO" />
+        <reference-one target-document="SimpleAcl\Bundle\ApiBundle\Document\Client" field="client" />
     </document>
+
 </doctrine-mongo-mapping>
