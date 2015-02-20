@@ -46,10 +46,9 @@ class ProductController extends FOSRestController
     public function postProductAction(Request $request)
     {
         # this is it
-        var_dump("HERE");
-//        if (false === $this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
-//            throw new AccessDeniedException();
-//        }
+        if (false === $this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw new AccessDeniedException();
+        }
 
         try {
             $formHandler = $this->container->get('simple_acl.product.handler');

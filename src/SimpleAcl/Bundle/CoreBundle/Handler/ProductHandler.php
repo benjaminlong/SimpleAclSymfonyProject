@@ -32,14 +32,14 @@ class ProductHandler implements ProductHandlerInterface
         $this->repository = $this->dm->getRepository($entityClass);
     }
 
-    public function getAll()
-    {
-        return $this->repository->findAll();
-    }
-
     public function get($id)
     {
         return $this->repository->find($id);
+    }
+
+    public function getAll()
+    {
+        return $this->repository->findAll();
     }
 
     public function post(array $parameters)
