@@ -9,6 +9,7 @@ class RefreshToken extends BaseRefreshToken
 {
     protected $id;
     protected $client;
+    protected $user;
 
     public function getClient()
     {

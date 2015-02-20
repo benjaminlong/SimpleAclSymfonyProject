@@ -6,12 +6,17 @@
 
     <parameters>
         <parameter key="simple_acl.form.type.product.class">SimpleAcl\Bundle\CoreBundle\Form\Type\ProductType</parameter>
+        <parameter key="simple_acl.form.type.user.class">SimpleAcl\Bundle\CoreBundle\Form\Type\UserType</parameter>
     </parameters>
 
     <services>
         <service id="simple_acl.form.type.product" class="%simple_acl.form.type.product.class%">
             <argument>%simple_acl.model.product.class%</argument>
             <tag name="form.type" alias="simple_acl_product" />
+        </service>
+        <service id="simple_acl.form.type.user" class="%simple_acl.form.type.user.class%">
+            <argument>%simple_acl.model.user.class%</argument>
+            <tag name="form.type" alias="simple_acl_user" />
         </service>
     </services>
 </container>

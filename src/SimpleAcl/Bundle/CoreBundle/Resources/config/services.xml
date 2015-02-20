@@ -6,6 +6,7 @@
 
     <parameters>
         <parameter key="simple_acl.product.handler.class">SimpleAcl\Bundle\CoreBundle\Handler\ProductHandler</parameter>
+        <parameter key="simple_acl.user.handler.class">SimpleAcl\Bundle\CoreBundle\Handler\UserHandler</parameter>
     </parameters>
     
     <services>
@@ -14,6 +15,12 @@
             <argument type="service" id="form.factory" />
             <argument type="service" id="simple_acl.form.type.product" />
             <argument>%simple_acl.model.product.class%</argument>
+        </service>
+        <service id="simple_acl.user.handler" class="%simple_acl.user.handler.class%">
+            <argument type="service" id="doctrine.odm.mongodb.document_manager" />
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="simple_acl.form.type.user" />
+            <argument>%simple_acl.model.user.class%</argument>
         </service>
     </services>
 </container>

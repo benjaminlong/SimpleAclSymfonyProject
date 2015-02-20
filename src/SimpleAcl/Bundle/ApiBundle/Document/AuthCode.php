@@ -9,6 +9,7 @@ class AuthCode extends BaseAuthCode
 {
     protected $id;
     protected $client;
+    protected $user;
 
     public function getClient()
     {
