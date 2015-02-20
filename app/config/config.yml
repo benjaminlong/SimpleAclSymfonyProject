@@ -106,6 +106,12 @@ swiftmailer:
 jms_serializer:
     metadata:
         directories:
-            simpleAclCore:
+            fosub:
+                namespace_prefix: "FOS\\UserBundle"
+                path: @SimpleAclApiBundle/Resources/config/serializer/fosub
+            simpleaclcore:
                 namespace_prefix: "SimpleAcl\\Bundle\\CoreBundle"
-                path: "@SimpleAclApiBundle/Resources/config/serializer"
+                path: @SimpleAclApiBundle/Resources/config/serializer/simpleaclcore
+            component:
+                namespace_prefix: "SimpleAcl\\Compoment\\Model"
+                path: @SimpleAclApiBundle/Resources/config/serializer/component

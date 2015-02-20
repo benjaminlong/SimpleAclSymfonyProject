@@ -1,0 +1,3 @@
+SimpleAcl\Bundle\CoreBundle\Document\Product:
+    exclusion_policy: ALL
+    properties: ~

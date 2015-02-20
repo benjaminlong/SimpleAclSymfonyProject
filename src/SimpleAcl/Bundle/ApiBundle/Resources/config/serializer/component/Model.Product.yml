@@ -1,6 +1,5 @@
 SimpleAcl\Component\Model\Product:
     exclusion_policy: ALL
-    xml_root_name: product
     properties:
         id:
             expose: true
@@ -11,6 +10,8 @@ SimpleAcl\Component\Model\Product:
         description:
             expose: true
             type: string
+        price:
+            expose: false
     relations:
         - rel: self
           href:
