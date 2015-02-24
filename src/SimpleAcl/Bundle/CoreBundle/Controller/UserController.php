@@ -13,8 +13,14 @@ class UserController extends FOSRestController
         $formHandler = $this->container->get('simple_acl.user.handler');
         $resource = $formHandler->get($id);
 
+        $authorizationChecker = $this->get('security.authorization_checker');
+
         if (is_null($resource)) {
             throw new BadRequestHttpException();
+        }
+
+        if (false === $authorizationChecker->isGranted('VIEW', $resource)) {
+            throw new AccessDeniedException();
         }
 
         $view = $this
@@ -33,6 +39,12 @@ class UserController extends FOSRestController
         $formHandler = $this->container->get('simple_acl.user.handler');
         $resources = $formHandler->getAll();
 
+        $authorizationChecker = $this->get('security.authorization_checker');
+
+        if (false === $authorizationChecker->isGranted('VIEW', $resources)) {
+            throw new AccessDeniedException();
+        }
+
         $view = $this
             ->view()
             ->setData($resources);
@@ -48,4 +60,3 @@ class UserController extends FOSRestController
         return $this->handleView($view);
     }
 }
- 

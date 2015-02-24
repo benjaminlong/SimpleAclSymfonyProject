@@ -26,6 +26,7 @@ class SimpleAclCoreExtension extends Extension
 
     protected $configDir;
     protected $configFiles = array(
+        'acls',
         'services',
         'forms'
     );

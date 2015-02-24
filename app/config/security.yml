@@ -1,4 +1,7 @@
 security:
+    acl:
+        provider: mongodb_acl_provider
+
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username_email

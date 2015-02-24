@@ -74,6 +74,10 @@ doctrine_mongodb:
         default:
             auto_mapping: true
 
+iam_persistent_mongo_db_acl:
+    acl_provider:
+        default_database: %mongodb_database_name%
+
 fos_user:
     db_driver: mongodb # other valid values are orm, 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
