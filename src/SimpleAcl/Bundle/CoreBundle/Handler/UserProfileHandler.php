@@ -37,15 +37,17 @@ class UserProfileHandler implements UserProfileHandlerInterface
         return $this->repository->find($id);
     }
 
-    public function post(array $parameters, $flush = true)
+    public function patch(UserProfileInterface $profile, array $parameters)
     {
-        $profile = $this->createProduct(); // factory method create an empty product
-
-        // Process form does all the magic, validate and hydrate the product Object.
-        return $this->processForm($profile, $parameters, 'POST', $flush);
+        return $this->processForm($profile, $parameters, 'PATCH');
     }
 
-    private function createProduct()
+    public function post(array $parameters, $flush = true)
+    {
+        return $this->processForm($this->createNew(), $parameters, 'POST');
+    }
+
+    private function createNew()
     {
         return new UserProfile();
     }
@@ -53,8 +55,7 @@ class UserProfileHandler implements UserProfileHandlerInterface
     private function processForm(
         UserProfileInterface $profile,
         array $parameters,
-        $method = "PUT",
-        $flush = true
+        $method = "PUT"
     ) {
         $form = $this->formFactory->create(
             $this->formType,
@@ -66,9 +67,7 @@ class UserProfileHandler implements UserProfileHandlerInterface
         if ($form->isValid()) {
             $profile = $form->getData();
             $this->dm->persist($profile);
-            if ($flush) {
-                $this->dm->flush();
-            }
+            $this->dm->flush();
 
             return $profile;
         }

@@ -42,15 +42,17 @@ class ProductHandler implements ProductHandlerInterface
         return $this->repository->findAll();
     }
 
-    public function post(array $parameters)
+    public function patch(ProductInterface $product, array $parameters)
     {
-        $product = $this->createProduct(); // factory method create an empty product
-
-        // Process form does all the magic, validate and hydrate the product Object.
-        return $this->processForm($product, $parameters, 'POST');
+        return $this->processForm($product, $parameters, 'PATCH');
     }
 
-    private function createProduct()
+    public function post(array $parameters)
+    {
+        return $this->processForm($this->createNew(), $parameters, 'POST');
+    }
+
+    private function createNew()
     {
         return new Product();
     }

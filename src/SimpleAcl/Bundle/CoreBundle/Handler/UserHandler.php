@@ -3,10 +3,11 @@
 namespace SimpleAcl\Bundle\CoreBundle\Handler;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use SimpleAcl\Bundle\CoreBundle\Document\User;
 use SimpleAcl\Component\Handler\UserHandlerInterface;
+use SimpleAcl\Component\Model\UserInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormTypeInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\OptionsResolver\Exception\InvalidArgumentException;
 
 class UserHandler implements UserHandlerInterface
@@ -46,11 +47,20 @@ class UserHandler implements UserHandlerInterface
         return $this->processForm($user, $parameters, 'PATCH');
     }
 
+    public function post(array $parameters)
+    {
+        return $this->processForm($this->createNew(), $parameters, 'POST');
+    }
+
+    private function createNew()
+    {
+        return new User();
+    }
+
     private function processForm(
         UserInterface $user,
         array $parameters,
-        $method = "PUT",
-        $flush = true
+        $method = "PUT"
     ) {
         $form = $this->formFactory->create(
             $this->formType,
@@ -62,9 +72,7 @@ class UserHandler implements UserHandlerInterface
         if ($form->isValid()) {
             $user = $form->getData();
             $this->dm->persist($user);
-            if ($flush) {
-                $this->dm->flush();
-            }
+            $this->dm->flush();
 
             return $user;
         }
