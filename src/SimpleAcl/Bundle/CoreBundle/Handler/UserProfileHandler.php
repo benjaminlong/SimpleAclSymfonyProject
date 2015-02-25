@@ -3,13 +3,14 @@
 namespace SimpleAcl\Bundle\CoreBundle\Handler;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use SimpleAcl\Component\Handler\UserHandlerInterface;
+use SimpleAcl\Bundle\CoreBundle\Document\UserProfile;
+use SimpleAcl\Component\Handler\UserProfileHandlerInterface;
+use SimpleAcl\Component\Model\UserProfileInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormTypeInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\OptionsResolver\Exception\InvalidArgumentException;
 
-class UserHandler implements UserHandlerInterface
+class UserProfileHandler implements UserProfileHandlerInterface
 {
     protected $dm;
 
@@ -36,40 +37,42 @@ class UserHandler implements UserHandlerInterface
         return $this->repository->find($id);
     }
 
-    public function getAll()
+    public function post(array $parameters, $flush = true)
     {
-        return $this->repository->findAll();
+        $profile = $this->createProduct(); // factory method create an empty product
+
+        // Process form does all the magic, validate and hydrate the product Object.
+        return $this->processForm($profile, $parameters, 'POST', $flush);
     }
 
-    public function patch(UserInterface $user, array $parameters)
+    private function createProduct()
     {
-        return $this->processForm($user, $parameters, 'PATCH');
+        return new UserProfile();
     }
 
     private function processForm(
-        UserInterface $user,
+        UserProfileInterface $profile,
         array $parameters,
         $method = "PUT",
         $flush = true
     ) {
         $form = $this->formFactory->create(
             $this->formType,
-            $user,
+            $profile,
             array('method' => $method)
         );
 
         $form->submit($parameters, 'PATCH' !== $method);
         if ($form->isValid()) {
-            $user = $form->getData();
-            $this->dm->persist($user);
+            $profile = $form->getData();
+            $this->dm->persist($profile);
             if ($flush) {
                 $this->dm->flush();
             }
 
-            return $user;
+            return $profile;
         }
 
         throw new InvalidArgumentException('Invalid submitted data', $form);
     }
 }
- 

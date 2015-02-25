@@ -7,3 +7,9 @@ simple_acl_api_user:
     name_prefix: simple_acl_
     resource: SimpleAcl\Bundle\CoreBundle\Controller\UserController
     type: rest
+
+simple_acl_api_user_profile:
+    parent: simple_acl_api_user
+    name_prefix: simple_acl_
+    resource: SimpleAcl\Bundle\CoreBundle\Controller\UserProfileController
+    type: rest

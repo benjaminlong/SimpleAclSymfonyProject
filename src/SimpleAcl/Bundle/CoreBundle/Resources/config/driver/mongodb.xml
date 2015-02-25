@@ -5,5 +5,6 @@
     <parameters>
         <parameter key="simple_acl.model.product.class">SimpleAcl\Bundle\CoreBundle\Document\Product</parameter>
         <parameter key="simple_acl.model.user.class">SimpleAcl\Bundle\CoreBundle\Document\User</parameter>
+        <parameter key="simple_acl.model.user_profile.class">SimpleAcl\Bundle\CoreBundle\Document\UserProfile</parameter>
     </parameters>
 </container>

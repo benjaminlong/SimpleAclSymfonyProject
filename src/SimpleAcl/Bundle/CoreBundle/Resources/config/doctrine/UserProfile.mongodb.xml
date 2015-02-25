@@ -5,7 +5,7 @@
 
     <document name="SimpleAcl\Bundle\CoreBundle\Document\UserProfile">
         <field fieldName="id" id="true" strategy="auto" />
-        <field fieldName="nickName" type="string" />
+        <field fieldName="nickname" type="string" />
         <field fieldName="firstName" type="string" />
         <field fieldName="lastName" type="string" />
         <field fieldName="birthday" type="string" />

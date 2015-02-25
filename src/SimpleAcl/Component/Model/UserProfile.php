@@ -8,7 +8,7 @@ class UserProfile implements UserProfileInterface
 {
     protected $id;
 
-    protected $nickName;
+    protected $nickname;
 
     protected $firstName;
 
@@ -84,17 +84,17 @@ class UserProfile implements UserProfileInterface
     /**
      * @inheritdoc
      */
-    public function setNickName($nickName)
+    public function setNickname($nickname)
     {
-        $this->nickName = $nickName;
+        $this->nickname = $nickname;
     }
 
     /**
      * @inheritdoc
      */
-    public function getNickName()
+    public function getNickname()
     {
-        return $this->nickName;
+        return $this->nickname;
     }
 
     /**

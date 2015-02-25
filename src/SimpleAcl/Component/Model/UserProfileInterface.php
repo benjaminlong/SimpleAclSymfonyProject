@@ -35,14 +35,14 @@ interface UserProfileInterface
     public function getLastName();
 
     /**
-     * @param mixed $nickName
+     * @param mixed $nickname
      */
-    public function setNickName($nickName);
+    public function setNickname($nickname);
 
     /**
      * @return mixed
      */
-    public function getNickName();
+    public function getNickname();
 
     /**
      * @param mixed $phoneNumber

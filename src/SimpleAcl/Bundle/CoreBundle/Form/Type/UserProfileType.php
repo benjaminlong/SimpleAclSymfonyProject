@@ -6,12 +6,12 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProductType extends AbstractType
+class UserProfileType extends AbstractType
 {
     private $class;
 
     /**
-     * @param string $class The User class name
+     * @param string $class The UserProfile class name
      */
     public function __construct($class)
     {
@@ -21,9 +21,21 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', null, array())
-            ->add('description', null, array())
-            ->add('price', null, array())
+            ->add('firstName', null, array(
+                'label' => 'simple_acl.form.first_name'
+            ))
+            ->add('lastName', null, array(
+                'label' => 'simple_acl.form.last_name'
+            ))
+            ->add('birthday', null, array(
+                'label' => 'simple_acl.form.birthday'
+            ))
+            ->add('phoneNumber', null, array(
+                'label' => 'simple_acl.form.phone_number'
+            ))
+            ->add('nickname', null, array(
+                'label' => 'simple_acl.form.nickname'
+            ))
         ;
     }
 
@@ -38,6 +50,7 @@ class ProductType extends AbstractType
 
     public function getName()
     {
-        return 'simple_acl_product';
+        return 'simple_acl_user_profile';
     }
 }
+ 

@@ -1,3 +1,11 @@
 SimpleAcl\Component\Model\User:
     exclusion_policy: ALL
     properties: ~
+    relations:
+        - rel: profile
+#          href:
+#              route: kfc_api_profile_show
+#              parameters:
+#                  id: expr(object.getProfile().getId())
+          embedded:
+              content: expr(object.getProfile())

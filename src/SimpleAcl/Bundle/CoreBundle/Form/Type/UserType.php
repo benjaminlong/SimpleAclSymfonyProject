@@ -28,13 +28,19 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email', 'email', array(
-                'label' => 'simple_acl.form.email'
+                'label'     => 'simple_acl.form.email'
             ))
             ->add('plainPassword', 'repeated', array(
-                'type' => 'password',
-                'first_options' => array('label' => 'simple_acl.form.password'),
-                'second_options' => array('label' => 'simple_acl.form.password_confirmation'),
-                'invalid_message' => 'fos_user.password.mismatch',
+                'type'              => 'password',
+                'first_options'     => array('label' => 'simple_acl.form.password'),
+                'second_options'    => array('label' => 'simple_acl.form.password_confirmation'),
+                'invalid_message'   => 'fos_user.password.mismatch',
+            ))
+            ->add('profile', 'document', array(
+                'class'     => 'SimpleAclCoreBundle:UserProfile',
+                'property'  => 'id',
+                'label'     => 'simple_acl.form.profile',
+                'required'  => false
             ))
         ;
     }
@@ -42,9 +48,10 @@ class UserType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => $this->class,
-            'intention'  => 'registration',
-            'cascade_validation' => true
+            'data_class'            => $this->class,
+            'intention'             => 'registration',
+            'cascade_validation'    => true,
+            'csrf_protection'       => false
         ));
     }
 
